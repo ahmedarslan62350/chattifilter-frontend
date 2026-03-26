@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0A0E1A;
+  --color-accent-cyan: #00F2FF;
+  --color-accent-purple: #A855F7;
+  --color-accent-magenta: #EC4899;
+}
+
+@layer base {
+  body {
+    @apply bg-[#0A0E1A] text-slate-200;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+  }
+  
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/5 shadow-2xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-cyan via-accent-purple to-accent-magenta;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-accent-cyan via-accent-purple to-accent-magenta;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
