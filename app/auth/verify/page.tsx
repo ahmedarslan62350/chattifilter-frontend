@@ -2,7 +2,7 @@
 
 import { useVerifyMutation } from "@/tanstack/mutations/auth.mutations";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 export default function VerifyPage() {
@@ -40,8 +40,12 @@ export default function VerifyPage() {
   }, [token, router, verifyMutation]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <p>Verifying your account...</p>
-    </div>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <p>Verifying your account...</p>
+        </div>
+      }
+    ></Suspense>
   );
 }
