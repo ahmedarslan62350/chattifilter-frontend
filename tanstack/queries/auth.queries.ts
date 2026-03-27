@@ -1,18 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { authService } from '@/api/auth.apis';
-
-export const useLogout = () => {
-  return useQuery({
-    queryKey: ['auth', 'logout'],
-    queryFn: () => authService.logout(),
-    enabled: false,
-  });
-};
+import { authService } from "@/api/auth.apis";
+import { useQuery } from "@tanstack/react-query";
 
 export const useRefreshSession = () => {
   return useQuery({
-    queryKey: ['auth', 'refresh'],
+    queryKey: ["auth", "session-refresh"],
     queryFn: () => authService.refresh(),
-    staleTime: 1000 * 60 * 15,
+    refetchInterval: 10 * 60 * 1000,
+    refetchIntervalInBackground: true,
+    staleTime: 9 * 60 * 1000,
+    refetchOnReconnect: true,
   });
 };

@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, Sparkles, CheckCircle2 } from "lucide-react";
 import { useRegisterMutation } from "@/tanstack/mutations/auth.mutations";
 import { RegisterRequest } from "@/types/api";
+import { toast } from "sonner";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -19,13 +20,17 @@ export default function SignupPage() {
     const payload: RegisterRequest = { name, email, password };
 
     registerMutation.mutate(payload, {
-      onSuccess: () => {
-
+      onSuccess: ({ data }) => {
+        toast.success(data.message || "Registration successfull");
       },
       onError: (err: any) => {
-        console.error("Signup failed", err);
+        toast.error(err.error || "Something went wrong");
       },
     });
+
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -121,13 +126,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {registerMutation.isError && (
-              <p className="text-red-500 text-sm">
-                {(registerMutation.error as any)?.message ||
-                  "Something went wrong"}
-              </p>
-            )}
-
             <button
               type="submit"
               disabled={registerMutation.isPending}
@@ -141,7 +139,7 @@ export default function SignupPage() {
           <p className="mt-8 text-center text-sm text-slate-500">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href="/auth/login"
               className="text-white font-bold hover:underline"
             >
               Sign in
