@@ -41,9 +41,9 @@ export default function LandingPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
+          <Link href="/auth/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link 
-            href="/signup" 
+            href="/auth/signup" 
             className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
           >
             Get Started
@@ -187,7 +187,7 @@ export default function LandingPage() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link 
-              href="/signup" 
+              href="/auth/signup" 
               className="bg-white text-black px-12 py-5 rounded-full text-xl font-bold hover:scale-105 transition-transform shadow-[0_0_50px_rgba(255,255,255,0.2)]"
             >
               Get Started Free
