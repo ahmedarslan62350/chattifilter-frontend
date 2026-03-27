@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-export default function VerifyPage() {
+function VerifyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -35,17 +35,27 @@ export default function VerifyPage() {
           toast.error(message);
           router.push("/auth/login");
         },
-      },
+      }
     );
   }, [token, router, verifyMutation]);
 
   return (
+    <div className="flex items-center justify-center min-h-screen">
+      <p>Verifying your account...</p>
+    </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
     <Suspense
       fallback={
         <div className="flex items-center justify-center min-h-screen">
-          <p>Verifying your account...</p>
+          <p>Loading verification...</p>
         </div>
       }
-    ></Suspense>
+    >
+      <VerifyContent />
+    </Suspense>
   );
 }
