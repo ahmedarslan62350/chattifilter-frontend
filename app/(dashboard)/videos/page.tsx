@@ -67,29 +67,24 @@ export default function VideoListPage() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="stack-lg">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Your Videos</h1>
-          <p className="text-slate-400">
+        <div className="stack-sm">
+          <h1 className="text-4xl font-bold text-foreground">Your Videos</h1>
+          <p className="text-muted-foreground text-lg">
             Manage and analyze your content performance.
           </p>
         </div>
         <div className="flex items-center gap-3">
-          {/* <button className="glass px-4 py-2 rounded-xl text-sm font-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all">
-            <Download className="w-4 h-4" /> Export Data
-          </button> */}
-          {/* <button className="bg-gradient-primary text-white px-6 py-2 rounded-xl text-sm font-bold hover:scale-105 transition-transform shadow-lg">
-            + Add New Video
-          </button> */}
+          {/* Buttons can be added here */}
         </div>
       </div>
 
       {/* Filters */}
-      <div className="glass p-4 rounded-2xl flex flex-wrap items-center gap-4">
+      <div className="card-clean py-4 rounded-2xl flex flex-wrap items-center gap-4">
         <div className="relative flex-1 min-w-[240px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Filter by title..."
@@ -98,7 +93,7 @@ export default function VideoListPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-accent-cyan/50"
+            className="w-full bg-background/50 border border-border rounded-md py-2 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-accent-cyan"
           />
         </div>
 
@@ -108,7 +103,7 @@ export default function VideoListPage() {
             setPlatformFilter(e.target.value);
             setPage(1);
           }}
-          className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs font-bold text-slate-400"
+          className="bg-background/50 border border-border rounded-md px-4 py-2 text-xs font-bold text-muted-foreground"
         >
           <option value="ALL">All Platforms</option>
           <option value="YOUTUBE">YouTube</option>
@@ -120,26 +115,22 @@ export default function VideoListPage() {
             setStatusFilter(e.target.value);
             setPage(1);
           }}
-          className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs font-bold text-slate-400"
+          className="bg-background/50 border border-border rounded-md px-4 py-2 text-xs font-bold text-muted-foreground"
         >
           <option value="ALL">All Status</option>
           <option value="FINISHED">Finished</option>
           <option value="PROCESSING">Processing</option>
           <option value="PENDING">Pending</option>
         </select>
-
-        {/* <button className="p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white transition-all">
-          <Filter className="w-4 h-4" />
-        </button> */}
       </div>
 
       {/* Table */}
-      <div className="glass rounded-[32px] overflow-hidden">
+      <div className="card-clean rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             {/* TABLE HEADER */}
             <thead>
-              <tr className="bg-white/5 text-[10px] uppercase tracking-widest font-bold text-slate-500">
+              <tr className="bg-white/5 text-[10px] uppercase tracking-widest font-bold text-muted-foreground">
                 <th className="px-8 py-4">Video</th>
                 <th className="px-8 py-4">Platform</th>
                 <th className="px-8 py-4 text-center">Total Comments</th>
@@ -172,10 +163,9 @@ export default function VideoListPage() {
                           height={100}
                           className="w-full h-full object-cover opacity-60"
                         />
-                        <Play className="absolute inset-0 m-auto w-4 h-4 text-white fill-white" />
+                        <Play className="absolute inset-0 m-auto w-4 h-4 text-foreground fill-foreground" />
                       </div>
-
-                      <span className="text-sm font-semibold text-white group-hover:text-accent-cyan transition-colors line-clamp-1">
+                      <span className="text-sm font-semibold text-foreground group-hover:text-accent-cyan transition-colors line-clamp-1">
                         {video.title}
                       </span>
                     </Link>
@@ -195,19 +185,19 @@ export default function VideoListPage() {
                       ) : (
                         <Video className="w-4 h-4 text-pink-500" />
                       )}
-                      <span className="text-xs text-slate-400 font-medium">
+                      <span className="text-xs text-muted-foreground font-medium">
                         {video.platform}
                       </span>
                     </div>
                   </td>
 
                   {/* COMMENTS COLUMN */}
-                  <td className="px-8 py-5 text-center text-sm text-slate-300 font-mono">
+                  <td className="px-8 py-5 text-center text-sm text-muted-foreground font-mono">
                     {video.totalComments.toLocaleString()}
                   </td>
 
                   {/* STATUS COLUMN */}
-                  <td className="px-8 py-5 text-xs text-slate-400 font-medium">
+                  <td className="px-8 py-5 text-xs text-muted-foreground font-medium">
                     {video.status}
                   </td>
 
@@ -215,7 +205,7 @@ export default function VideoListPage() {
                   <td className="px-8 py-5 text-right">
                     <Link
                       href={`/videos/${video.id}`}
-                      className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+                      className="p-2 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition-all"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>
@@ -228,7 +218,7 @@ export default function VideoListPage() {
 
         {/* Pagination */}
         <div className="p-6 border-t border-white/5 flex items-center justify-between">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             Showing {startIndex + 1}–
             {Math.min(startIndex + PAGE_SIZE, filteredVideos.length)} of{" "}
             {filteredVideos.length} videos
@@ -238,7 +228,7 @@ export default function VideoListPage() {
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page === 1}
-              className="p-2 rounded-lg border border-white/10 text-slate-500 hover:text-white disabled:opacity-40"
+              className="p-2 rounded-lg border border-white/10 text-muted-foreground hover:text-foreground disabled:opacity-40"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -252,8 +242,8 @@ export default function VideoListPage() {
                   className={cn(
                     "w-8 h-8 rounded-lg text-xs font-bold transition-all",
                     p === page
-                      ? "bg-gradient-primary text-white"
-                      : "text-slate-500 hover:bg-white/5",
+                      ? "bg-primary text-black"
+                      : "text-white border border-white/10 hover:bg-white/5",
                   )}
                 >
                   {p}
@@ -264,7 +254,7 @@ export default function VideoListPage() {
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page === totalPages}
-              className="p-2 rounded-lg border border-white/10 text-slate-500 hover:text-white disabled:opacity-40"
+              className="p-2 rounded-lg border border-white/10 text-muted-foreground hover:text-foreground disabled:opacity-40"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

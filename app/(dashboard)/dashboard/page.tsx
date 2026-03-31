@@ -9,8 +9,6 @@ import {
   AlertCircle,
   ChevronRight,
   Play,
-  Baby,
-  BabyIcon,
   Video,
 } from "lucide-react";
 import {
@@ -43,17 +41,14 @@ export default function DashboardOverview() {
 
   const [range, setRange] = useState<trends>("weekly");
 
-  const trends = useMemo(() => {
+  const trendsData = useMemo(() => {
     if (!analytics) return [];
     return range === "weekly"
       ? analytics.engagementWeeklyTrends
       : analytics.engagementMonthlyTrends;
   }, [analytics, range]);
 
-  if (isLoading) {
-    return <Skeleton className="h-10 w-32" />;
-  }
-
+  if (isLoading) return <Skeleton className="h-10 w-32" />;
   if (!analytics) return null;
 
   const cardData = [
@@ -84,13 +79,13 @@ export default function DashboardOverview() {
   ];
 
   const criticalSignals =
-    (analytics.mostCricitalSignals.map((s: any) => ({
-      type: s?.type?.toUpperCase()?.split("_").join(" "),
+    (analytics.mostCricitalSignals?.map((s: any) => ({
+      type: s?.type?.toUpperCase().split("_").join(" "),
       reason: s.reason,
     })) as Array<any>) || [];
 
   const recentVideos =
-    (analytics.recentVideos.map((v: any) => ({
+    (analytics.recentVideos?.map((v: any) => ({
       id: v.id,
       title: v.title || "",
       platform: (v.platform === "GOOGLE" && "YOUTUBE") || "",
@@ -99,58 +94,62 @@ export default function DashboardOverview() {
       imageUrl: `https://img.youtube.com/vi/${v.platformVideoId}/mqdefault.jpg`,
     })) as Array<any>) || [];
 
-  const onTrendsOptionChange = (val: trends) => {
-    setRange(val);
-  };
+  const onTrendsOptionChange = (val: trends) => setRange(val);
 
   return (
     <div className="space-y-8">
+      {/* Greeting */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Welcome back, Ahmed
           </h1>
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             Here&apos;s what happened with your audience today.
           </p>
         </div>
       </div>
 
+      {/* Critical Signals */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="glass p-6 rounded-3xl border-l-4 border-l-accent-cyan relative overflow-hidden"
+        className="glass p-6 rounded-xl border-l-4 border-l-accent-cyan relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 p-8 opacity-10">
           <Sparkles className="w-32 h-32 text-accent-cyan" />
         </div>
 
-        <div className="flex flex-col gap-5">
-          {criticalSignals?.map((s, i) => (
-            <div key={i} className="flex items-start gap-4 relative z-10">
+        <div className="flex flex-col gap-5 relative z-10">
+          {criticalSignals.map((s, i) => (
+            <div key={i} className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-2xl bg-accent-cyan/20 flex items-center justify-center shrink-0">
                 <AlertCircle className="w-6 h-6 text-accent-cyan" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold text-white">{s.type}</h3>
+                  <h3 className="text-lg font-bold text-foreground">
+                    {s.type}
+                  </h3>
                   <span className="text-xs font-bold text-accent-cyan uppercase tracking-widest">
                     High Priority
                   </span>
                 </div>
-                <p className="text-slate-400 mb-4 max-w-3xl">{s.reason}</p>
+                <p className="text-muted-foreground mb-4 max-w-3xl">
+                  {s.reason}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </motion.div>
 
-      {/* Stats Grid */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cardData.map((stat, i) => (
           <div
             key={i}
-            className="glass p-6 rounded-3xl group hover:border-white/20 transition-all"
+            className="glass p-6 rounded-xl group hover:border-white/20 transition-all"
           >
             <div className="flex items-center justify-between mb-4">
               <div
@@ -159,23 +158,23 @@ export default function DashboardOverview() {
                 <stat.icon className="w-5 h-5" />
               </div>
             </div>
-            <p className="text-sm text-slate-500 font-medium mb-1">
+            <p className="text-sm text-muted-foreground font-medium mb-1">
               {stat.label}
             </p>
-            <h3 className="text-2xl font-bold text-white">{stat.value}</h3>
+            <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
           </div>
         ))}
       </div>
 
-      {/* Charts Section */}
+      {/* Engagement Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-3 glass p-8 rounded-[32px]">
+        <div className="lg:col-span-3 glass p-8 rounded-xl">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="text-xl font-bold text-foreground">
                 Engagement Trends
               </h3>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Comments vs AI Signals over time
               </p>
             </div>
@@ -183,11 +182,10 @@ export default function DashboardOverview() {
               value={range}
               onValueChange={(val) => onTrendsOptionChange(val as trends)}
             >
-              <SelectTrigger className="w-[140px] bg-white/5 border-white/10 rounded-xl px-3 py-1.5 text-xs font-medium focus:ring-0 focus:ring-offset-0">
+              <SelectTrigger className="w-[140px] bg-background/50 border border-border rounded-xl px-3 py-1.5 text-xs font-medium focus:ring-0 focus:ring-offset-0">
                 <SelectValue placeholder="Select Range" />
               </SelectTrigger>
-
-              <SelectContent className="bg-[#121212] border-white/10 text-white">
+              <SelectContent className="bg-background border border-border text-foreground">
                 <SelectItem value="weekly" className="text-xs">
                   Last 7 Days
                 </SelectItem>
@@ -200,7 +198,7 @@ export default function DashboardOverview() {
 
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trends}>
+              <AreaChart data={trendsData}>
                 <defs>
                   <linearGradient
                     id="colorComments"
@@ -227,10 +225,11 @@ export default function DashboardOverview() {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fill: "#64748b", fontSize: 12 }}
-                  tickFormatter={(value) => {
-                    const d = new Date(value);
-                    return d.toLocaleDateString("en-US", { weekday: "short" });
-                  }}
+                  tickFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", {
+                      weekday: "short",
+                    })
+                  }
                   dy={10}
                 />
                 <YAxis
@@ -268,10 +267,10 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* Recent Videos Table Preview */}
-      <div className="glass rounded-[32px] overflow-hidden">
-        <div className="p-8 border-b border-white/5 flex items-center justify-between">
-          <h3 className="text-xl font-bold text-white">Recent Videos</h3>
+      {/* Recent Videos Table */}
+      <div className="glass rounded-xl overflow-hidden">
+        <div className="p-8 border-b border-border flex items-center justify-between">
+          <h3 className="text-xl font-bold text-foreground">Recent Videos</h3>
           <Link
             href="/videos"
             className="text-sm font-bold text-accent-cyan hover:underline flex items-center gap-1"
@@ -282,7 +281,7 @@ export default function DashboardOverview() {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-white/5 text-[10px] uppercase tracking-widest font-bold text-slate-500">
+              <tr className="bg-white/5 text-[10px] uppercase tracking-widest font-bold text-muted-foreground">
                 <th className="px-8 py-4">Video Title</th>
                 <th className="px-8 py-4">Platform</th>
                 <th className="px-8 py-4">Comments</th>
@@ -298,7 +297,7 @@ export default function DashboardOverview() {
                 >
                   <td className="px-8 py-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-8 rounded-lg bg-slate-800 overflow-hidden relative">
+                      <div className="w-12 h-8 rounded-lg bg-muted/20 overflow-hidden relative">
                         <Image
                           src={video.imageUrl}
                           alt="Thumb"
@@ -308,7 +307,7 @@ export default function DashboardOverview() {
                         />
                         <Play className="absolute inset-0 m-auto w-3 h-3 text-white fill-white" />
                       </div>
-                      <span className="text-sm font-semibold text-white truncate max-w-[200px]">
+                      <span className="text-sm font-semibold text-foreground truncate max-w-[200px]">
                         {video.title}
                       </span>
                     </div>
@@ -326,20 +325,24 @@ export default function DashboardOverview() {
                       ) : (
                         <Video className="w-4 h-4 text-pink-500" />
                       )}
-                      <span className="text-xs text-slate-400 font-medium">
+                      <span className="text-xs text-muted-foreground font-medium">
                         {video.platform}
                       </span>
                     </div>
                   </td>
-                  <td className="px-8 py-5 text-sm text-slate-300">
+                  <td className="px-8 py-5 text-sm text-muted-foreground">
                     {video.comments}
                   </td>
                   <td className="px-8 py-5">
                     <div className="flex items-center gap-2">
                       <div
-                        className={`w-1.5 h-1.5 rounded-full ${video.status === "Processed" ? "bg-emerald-400" : "bg-accent-purple animate-pulse"}`}
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          video.status === "Processed"
+                            ? "bg-emerald-400"
+                            : "bg-accent-purple animate-pulse"
+                        }`}
                       />
-                      <span className="text-xs font-medium text-slate-400">
+                      <span className="text-xs font-medium text-muted-foreground">
                         {video.status}
                       </span>
                     </div>
@@ -347,7 +350,7 @@ export default function DashboardOverview() {
                   <td className="px-8 py-5">
                     <Link
                       href={`/videos/${video.id}`}
-                      className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all inline-block"
+                      className="p-2 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition-all inline-block"
                     >
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>

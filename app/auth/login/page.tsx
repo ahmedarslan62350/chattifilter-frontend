@@ -19,65 +19,52 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const payload: LoginRequest = {
-      email,
-      password,
-    };
+    const payload: LoginRequest = { email, password };
 
     loginMutation.mutate(payload, {
-      onSuccess: ({ data }) => {
-        toast.success(data.message || "Login successful");
-      },
-      onError: (err: any) => {
-        toast.error(err?.error || "Invalid credentials");
-      },
+      onSuccess: ({ data }) => toast.success(data.message || "Login successful"),
+      onError: (err: any) => toast.error(err?.error || "Invalid credentials"),
     });
   };
 
-  // YouTube OAuth redirect
   const handleYoutubeLogin = () => {
-    const baseURL =
-      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:4000";
-
-    const redirectUrl = `${baseURL}/auth/youtube?isReadOnly=${isReadOnly}`;
-    window.location.href = redirectUrl;
+    const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:4000";
+    window.location.href = `${baseURL}/auth/youtube?isReadOnly=${isReadOnly}`;
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0E1A] flex items-center justify-center p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground transition-colors flex items-center justify-center p-8 relative overflow-hidden">
+      {/* Background blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/10 blur-[120px] rounded-full animate-pulse-slow" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-purple/10 blur-[120px] rounded-full animate-pulse-slow" />
 
+      {/* Form card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md glass p-10 rounded-[40px] border border-white/10 relative z-10"
+        className="w-full max-w-md card-clean p-10 rounded-xl border border-border mx-auto relative z-10"
       >
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-10 text-sm font-bold uppercase tracking-widest"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
 
         <div className="flex items-center gap-3 mb-10">
-          <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
-            <span className="text-white font-bold text-2xl">S</span>
-          </div>
-          <span className="font-bold text-2xl tracking-tight text-white">
-            Sutorium
-          </span>
+          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center font-bold text-background text-2xl">S</div>
+          <span className="font-bold text-2xl tracking-tight">{`Sutorium`}</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
-        <p className="text-slate-400 mb-8">
+        <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
+        <p className="text-muted-foreground mb-8">
           Enter your credentials to access your dashboard.
         </p>
 
-        {/* Normal login form */}
+        {/* Login form */}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
               Email Address
             </label>
             <input
@@ -85,12 +72,12 @@ export default function LoginPage() {
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-cyan/50 transition-all"
+              className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:border-accent-cyan transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+            <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
               Password
             </label>
             <input
@@ -98,14 +85,14 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-cyan/50 transition-all"
+              className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:border-accent-cyan transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loginMutation.isPending}
-            className="w-full bg-gradient-primary text-white py-4 rounded-2xl font-bold shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+            className="w-full bg-gradient-primary text-background py-4 rounded-xl font-bold shadow-lg hover:opacity-90 transition-all flex items-center justify-center gap-2"
           >
             {loginMutation.isPending ? "Signing in..." : "Sign In"}
             <Sparkles className="w-4 h-4" />
@@ -114,11 +101,11 @@ export default function LoginPage() {
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-8">
-          <div className="flex-1 h-[1px] bg-white/10" />
-          <span className="text-xs text-slate-500 font-bold uppercase">
+          <div className="flex-1 h-[1px] bg-border" />
+          <span className="text-xs text-muted-foreground font-bold uppercase">
             or continue with
           </span>
-          <div className="flex-1 h-[1px] bg-white/10" />
+          <div className="flex-1 h-[1px] bg-border" />
         </div>
 
         {/* Readonly checkbox */}
@@ -129,23 +116,23 @@ export default function LoginPage() {
             onChange={(e) => setIsReadOnly(e.target.checked)}
             className="w-4 h-4 accent-cyan"
           />
-          <span className="text-sm text-slate-400">
+          <span className="text-sm text-muted-foreground">
             Connect YouTube in read-only mode
           </span>
         </div>
 
-        {/* YouTube OAuth Button */}
+        {/* YouTube OAuth */}
         <button
           onClick={handleYoutubeLogin}
-          className="w-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all py-4 rounded-2xl flex items-center justify-center gap-3 font-semibold text-white"
+          className="w-full bg-muted border border-border hover:bg-muted/40 transition-all py-4 rounded-xl flex items-center justify-center gap-3 font-semibold text-foreground"
         >
-          <Image src="/youtube.svg" alt="YouTube" className="w-5 h-5" width={20} height={20}/>
+          <Image src="/youtube.svg" alt="YouTube" width={20} height={20} className="w-5 h-5" />
           Continue with YouTube
         </button>
 
-        <p className="mt-8 text-center text-sm text-slate-500">
+        <p className="mt-8 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="text-white font-bold hover:underline">
+          <Link href="/auth/signup" className="text-foreground font-bold hover:underline">
             Sign up
           </Link>
         </p>

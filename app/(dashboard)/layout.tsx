@@ -1,17 +1,22 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Sidebar } from '@/components/Sidebar';
-import { DashboardHeader } from '@/components/DashboardHeader';
-import { motion, AnimatePresence } from 'motion/react';
+import React from "react";
+import { Sidebar } from "@/components/Sidebar";
+import { DashboardHeader } from "@/components/DashboardHeader";
+import { motion, AnimatePresence } from "motion/react";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex min-h-screen bg-[#0A0E1A]">
-      <Sidebar />
-      <main className="flex-1 flex flex-col transition-all duration-300 ml-20 lg:ml-64">
-        <DashboardHeader />
-        <div className="p-8">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-background/90">
+      <DashboardHeader />
+
+      <main className="flex-1 flex min-w-0 h-full overflow-hidden">
+        <Sidebar />
+        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
           <AnimatePresence mode="wait">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
