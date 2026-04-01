@@ -11,13 +11,7 @@ import { SuggestedReplyModal } from "@/components/dashboard/SuggestedReplyModal"
 import { OpportunityDetailModal } from "@/components/dashboard/OpportunityDetailModal";
 import { useParams } from "next/navigation";
 
-interface VideoAnalysisPageProps {
-  params: { id: string };
-}
-
-export default function VideoDetailPage({
-  params,
-}: Readonly<VideoAnalysisPageProps>) {
+export default function VideoDetailPage() {
   const { id } = useParams();
 
   const [activeTab, setActiveTab] = useState<"signals" | "opportunities">(
@@ -59,20 +53,16 @@ export default function VideoDetailPage({
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <Header videoTitle={videoInsights.title} />
 
-      {/* Video Overview Cards */}
       <OverviewCards
         videoInsights={videoInsights}
         signals={signals}
         opportunityScore={opportunityScore}
       />
 
-      {/* Tabs */}
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Tab Content */}
       <TabContent
         activeTab={activeTab}
         signals={signals}
@@ -81,7 +71,6 @@ export default function VideoDetailPage({
         setSelectedOpportunity={setSelectedOpportunity}
       />
 
-      {/* Modals */}
       {selectedSignal && (
         <SuggestedReplyModal
           signal={selectedSignal}

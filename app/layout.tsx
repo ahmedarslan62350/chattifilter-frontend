@@ -3,6 +3,8 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/lib/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -20,10 +22,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("dark", geist.variable)}>
-      <body className="bg-background text-foreground antialiased" suppressHydrationWarning>
+      <body
+        className="bg-background text-foreground antialiased"
+        suppressHydrationWarning
+      >
         <QueryProvider>
           {children}
           <Toaster position="top-right" />
+          <Analytics />
+          <SpeedInsights />
         </QueryProvider>
       </body>
     </html>
