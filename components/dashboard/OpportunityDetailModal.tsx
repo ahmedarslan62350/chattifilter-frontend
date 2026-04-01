@@ -87,7 +87,12 @@ export function OpportunityDetailModal({
         <div className="space-y-6">
           <Section title="Audience Need">{opportunity.audienceNeed}</Section>
           <Section title="Why Now">{opportunity.whyNow}</Section>
-          <Section title="Evidence">{opportunity.evidence}</Section>
+          <Section title="Evidence">
+            {opportunity.evidenceExcerpts.length &&
+              opportunity.evidenceExcerpts.map((e: string) => (
+                <p className="glass p-4 rounded-md border border-white/5 flex flex-col mb-3" key={e}>{e}</p>
+              ))}
+          </Section>
           {opportunity.titleDirections?.length > 0 && (
             <Section title="Title Directions">
               <ul className="space-y-2">
