@@ -22,9 +22,9 @@ export function Sidebar() {
         isOpen ? "w-64" : "w-20"
       )}
     >
-      <div className="flex flex-col h-full p-4">
+      <div className="flex flex-col h-full p-4 justify-between">
         {/* Navigation */}
-        <nav className="flex-1 space-y-2">
+        <nav className="space-y-2">
           {navItems.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
@@ -56,9 +56,9 @@ export function Sidebar() {
         </nav>
 
         {/* Pro Plan & Toggle */}
-        <div className="mt-auto border-t border-border">
+        <div className="pt-6 border-t border-border mb-15">
           {isOpen ? (
-            <div className="card-clean rounded-2xl p-4 mb-4">
+            <div className="card-clean rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-4 h-4 text-accent-cyan" />
                 <span className="text-xs font-bold text-foreground uppercase tracking-wider">
@@ -73,7 +73,7 @@ export function Sidebar() {
               </p>
             </div>
           ) : (
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center">
               <Sparkles className="w-5 h-5 text-accent-cyan animate-pulse" />
             </div>
           )}
