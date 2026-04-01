@@ -56,7 +56,7 @@ export function Sidebar() {
         </nav>
 
         {/* Pro Plan & Toggle */}
-        <div className="mt-auto pt-6 border-t border-border">
+        <div className="mt-auto border-t border-border">
           {isOpen ? (
             <div className="card-clean rounded-2xl p-4 mb-4">
               <div className="flex items-center gap-2 mb-2">
