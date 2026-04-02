@@ -23,7 +23,6 @@ export function Sidebar() {
       )}
     >
       <div className="flex flex-col h-full p-4 justify-between">
-        {/* Navigation */}
         <nav className="space-y-2">
           {navItems.map((item) => {
             const isActive = pathname.startsWith(item.href);
@@ -55,7 +54,6 @@ export function Sidebar() {
           })}
         </nav>
 
-        {/* Pro Plan & Toggle */}
         <div className="pt-6 border-t border-border mb-15">
           {isOpen ? (
             <div className="card-clean rounded-2xl p-4">
